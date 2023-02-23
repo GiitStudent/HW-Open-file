@@ -1,0 +1,30 @@
+
+
+import os
+
+def file_sort():
+    list_file = []
+    for file in os.listdir("E:\Загрузки\HW Open file"):
+        if file.endswith(".txt"):
+            list_file.append(file)
+
+    file_dict = {}
+    for name_file in list_file:
+        folder = 'E:\Загрузки\HW Open file'
+        full_path = os.path.join(folder, name_file)
+        with open(full_path, 'r', encoding='utf-8') as text:
+            content = text.read().splitlines()
+            content_join = ",".join(content)
+        file_dict[name_file] = len(content), content_join
+
+    file_dict_sort = {}
+    file_list_sort = sorted(file_dict, key=file_dict.get)
+    for values_ in file_list_sort:
+        file_dict_sort[values_] = file_dict[values_]
+
+    for file_dict_sort_key, file_dict_sort_val in file_dict_sort.items():
+        print(file_dict_sort_key)
+        for file_dict_sort_val2 in file_dict_sort_val:
+            print(file_dict_sort_val2)
+
+file_sort()
