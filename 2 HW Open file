@@ -1,0 +1,32 @@
+
+
+def cooking():
+    with open('Cook Book.txt', encoding='utf-8') as cook_book_file:
+        cook_book = {}
+        for dish in cook_book_file:
+            dish_name = dish.strip()
+            ingredients_counter = int(cook_book_file.readline())
+            ingredients = []
+            for items in range(ingredients_counter):
+                ingredient = cook_book_file.readline().strip()
+                ingredient_name, quantity, measure = ingredient.split('|')
+                ingredients.append({'ingredient_name': ingredient_name, 'quantity': quantity, 'measure': measure})
+            cook_book_file.readline()
+            cook_book[dish_name] = (ingredients)
+    return cook_book
+
+def get_shop_list_by_dishes(dishes, person_count):
+    cook_book = cooking()
+    dishes_dict = {}
+    sum_quantity = 0
+    for dish in dishes:
+        for item in cook_book[dish]:
+            if item['ingredient_name'] not in dishes_dict.keys():
+                dishes_dict[item['ingredient_name']] = {'measure': item['measure'], 'quantity': (
+                                person_count * int(item['quantity']))}
+            else:
+                sum_quantity = dishes_dict[item['ingredient_name']]['quantity'] + (person_count * int(item['quantity']))
+                dishes_dict[item['ingredient_name']] = {'measure': item['measure'], 'quantity': (sum_quantity)}
+    return dishes_dict
+
+print(get_shop_list_by_dishes(['Омлет', 'Запеченный картофель'], 2))
