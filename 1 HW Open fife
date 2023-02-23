@@ -1,0 +1,18 @@
+
+
+def cooking():
+    with open('Cook Book.txt', encoding='utf-8') as cook_book_file:
+        cook_book = {}
+        for dish in cook_book_file:
+            dish_name = dish.strip()
+            ingredients_counter = int(cook_book_file.readline())
+            ingredients = []
+            for items in range(ingredients_counter):
+                ingredient = cook_book_file.readline().strip()
+                ingredient_name, quantity, measure = ingredient.split('|')
+                ingredients.append({'ingredient_name': ingredient_name, 'quantity': quantity, 'measure': measure})
+            cook_book_file.readline()
+            cook_book[dish_name] = (ingredients)
+    return cook_book
+
+print(cooking())
